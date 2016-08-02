@@ -2,6 +2,8 @@ package main
 
 import "testing"
 
+// TestAddNewUrlToMap ... Test to ensure that URLs are properly added and
+// retrieved from the map storage driver.
 func TestAddNewUrlToMap(t *testing.T) {
 	storage := InitMapStorage()
 	shortUrl1 := storage.AddNewUrl("http://kelcecil.com")
@@ -20,6 +22,8 @@ func TestAddNewUrlToMap(t *testing.T) {
 	}
 }
 
+// TestGetUrlsFromMap ... Ensure that short URL parts retrieved when storing URLs
+// are also able to retrieve the same URLs later.
 func TestGetUrlsFromMap(t *testing.T) {
 	storage := InitMapStorage()
 	testCases := map[string]string{

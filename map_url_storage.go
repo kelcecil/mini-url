@@ -1,5 +1,7 @@
 package main
 
+// MapUrlStorage ... This is just a simple structure for URL storage backed by Go's
+// always-dependable map.
 type MapUrlStorage struct {
 	Storage map[string]string
 }
