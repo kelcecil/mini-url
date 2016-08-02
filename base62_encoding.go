@@ -28,10 +28,15 @@ func FindDigitsForInt(dividend int) []int {
 	digits := make([]int, 0)
 	var remainder int
 
-	for dividend > 0 {
-		remainder = dividend % 62
-		dividend = dividend / 62
-		digits = append(digits, remainder)
+	switch {
+	case dividend > 0:
+		for dividend > 0 {
+			remainder = dividend % 62
+			dividend = dividend / 62
+			digits = append(digits, remainder)
+		}
+	case dividend == 0:
+		digits = append(digits, 0)
 	}
 
 	return digits
