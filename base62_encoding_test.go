@@ -2,6 +2,22 @@ package main
 
 import "testing"
 
+func TestIdToHash(t *testing.T) {
+	testCases := map[int]string{
+		100:   "Mb",
+		62:    "ab",
+		63:    "bb",
+		10000: "sLc",
+	}
+
+	for testId, desiredTestResult := range testCases {
+		result := IdToHash(testId)
+		if result != desiredTestResult {
+			t.Errorf("id to shortened string failed for value: %v; got: %v", testId, result)
+		}
+	}
+}
+
 // TestDigitsForInt ... Ensure that identifiers are broken down into
 // base62 parts correctly.
 func TestDigitsForInt(t *testing.T) {
