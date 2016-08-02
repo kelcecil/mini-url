@@ -1,5 +1,7 @@
 package main
 
+// BASE62_ALPHABET ... Letters for use in the short URLS.
+// Each number, lowercase, and uppercase letter is a distinct character.
 var BASE62_ALPHABET string = "abcdefghijklmnopqrstuvwxyz" +
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
 	"0123456789"

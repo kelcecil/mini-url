@@ -2,6 +2,8 @@ package main
 
 import "testing"
 
+// TestIdToHash ... Test that identifier numbers are properly converted into
+// short ids properly.
 func TestIdToHash(t *testing.T) {
 	testCases := map[int]string{
 		100:   "Mb",
