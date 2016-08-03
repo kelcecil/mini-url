@@ -47,7 +47,7 @@ func (handler ShortUrlForwardingHandler) ServeHTTP(w http.ResponseWriter, r *htt
 func (handler ShortUrlForwardingHandler) handleAddingNewShortUrl(w http.ResponseWriter, r *http.Request) {
 	// Read the body of the request and parse the new URL to be added.
 	data, err := ioutil.ReadAll(r.Body)
-	if err = checkAndHandleError(err, w, r); err != nil {
+	if checkAndHandleError(err, w, r) != nil {
 		return
 	}
 	var newUrl NewUrlSubmission
