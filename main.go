@@ -11,7 +11,7 @@ func main() {
 	log.Print("Initializing storage")
 	storage := InitMapStorage()
 
-	http.Handle("/", ShortUrlForwardingHandler{
+	http.Handle("/", ShortURLForwardingHandler{
 		Storage: storage,
 	})
 

@@ -2,41 +2,41 @@ package main
 
 import "testing"
 
-// TestAddNewUrlToMap ... Test to ensure that URLs are properly added and
+// TestAddNewURLToMap ... Test to ensure that URLs are properly added and
 // retrieved from the map storage driver.
-func TestAddNewUrlToMap(t *testing.T) {
+func TestAddNewURLToMap(t *testing.T) {
 	storage := InitMapStorage()
-	shortUrl1 := storage.AddNewUrl("http://kelcecil.com")
-	shortUrl2 := storage.AddNewUrl("http://www.google.com")
+	shortURL1 := storage.AddNewURL("http://kelcecil.com")
+	shortURL2 := storage.AddNewURL("http://www.google.com")
 
-	if shortUrl1 == shortUrl2 {
-		t.Errorf("Short Urls for two different URLs should not be the same.")
+	if shortURL1 == shortURL2 {
+		t.Errorf("Short URLs for two different URLs should not be the same.")
 	}
 
-	if shortUrl1 != "a" {
-		t.Errorf("Short URL for first insert wasn't what was expected; was: %v", shortUrl1)
+	if shortURL1 != "a" {
+		t.Errorf("Short URL for first insert wasn't what was expected; was: %v", shortURL1)
 	}
 
-	if shortUrl2 != "b" {
-		t.Errorf("Short URL for second insert wasn't what was expected; was: %v", shortUrl2)
+	if shortURL2 != "b" {
+		t.Errorf("Short URL for second insert wasn't what was expected; was: %v", shortURL2)
 	}
 }
 
-// TestGetUrlsFromMap ... Ensure that short URL parts retrieved when storing URLs
+// TestGetURLsFromMap ... Ensure that short URL parts retrieved when storing URLs
 // are also able to retrieve the same URLs later.
-func TestGetUrlsFromMap(t *testing.T) {
+func TestGetURLsFromMap(t *testing.T) {
 	storage := InitMapStorage()
 	testCases := map[string]string{
-		"http://kelcecil.com": storage.AddNewUrl("http://kelcecil.com"),
-		"http://boxcast.com":  storage.AddNewUrl("http://boxcast.com"),
+		"http://kelcecil.com": storage.AddNewURL("http://kelcecil.com"),
+		"http://boxcast.com":  storage.AddNewURL("http://boxcast.com"),
 	}
 
-	for originalUrl, shortUrl := range testCases {
-		retrievedUrl := storage.GetUrlByShortHash(shortUrl)
-		if originalUrl != retrievedUrl {
-			t.Errorf("Look up by short hash failed for short url; got: %v, wanted %v",
-				retrievedUrl,
-				originalUrl)
+	for originalURL, shortURL := range testCases {
+		retrievedURL := storage.GetURLByShortHash(shortURL)
+		if originalURL != retrievedURL {
+			t.Errorf("Look up by short hash failed for short URL; got: %v, wanted %v",
+				retrievedURL,
+				originalURL)
 		}
 	}
 }

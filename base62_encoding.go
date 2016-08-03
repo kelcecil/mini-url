@@ -2,30 +2,30 @@ package main
 
 // BASE62_ALPHABET ... Letters for use in the short URLS.
 // Each number, lowercase, and uppercase letter is a distinct character.
-var BASE62_ALPHABET string = "abcdefghijklmnopqrstuvwxyz" +
+var Base62Alphabet = "abcdefghijklmnopqrstuvwxyz" +
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
 	"0123456789"
 
-// IdToHash ... Take a numeric id and convert to a user friendly string
+// IDToHash ... Take a numeric id and convert to a user friendly string
 // for use.
-func IdToHash(id int) string {
+func IDToHash(id int) string {
 	digits := FindDigitsForInt(id)
-	shortenedUrlHash := ""
+	shortenedURLHash := ""
 
 	for i := range digits {
 		// Get the alphabet indice from our converted digits
 		indice := digits[i]
 
 		// Get a one letter range to easily get a string and add to the hash
-		shortenedUrlHash = shortenedUrlHash + BASE62_ALPHABET[indice:indice+1]
+		shortenedURLHash = shortenedURLHash + Base62Alphabet[indice:indice+1]
 	}
-	return shortenedUrlHash
+	return shortenedURLHash
 }
 
-// findDigitsForInt ... Obtain the individual digits that will be used
+// FindDigitsForInt ... Obtain the individual digits that will be used
 // to find the replacement letters in our base62 alphabet.
 func FindDigitsForInt(dividend int) []int {
-	digits := make([]int, 0)
+	var digits []int
 	var remainder int
 
 	switch {

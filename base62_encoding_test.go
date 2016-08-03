@@ -4,7 +4,7 @@ import "testing"
 
 // TestIdToHash ... Test that identifier numbers are properly converted into
 // short ids properly.
-func TestIdToHash(t *testing.T) {
+func TestIDToHash(t *testing.T) {
 	testCases := map[int]string{
 		100:   "Mb",
 		62:    "ab",
@@ -12,10 +12,10 @@ func TestIdToHash(t *testing.T) {
 		10000: "sLc",
 	}
 
-	for testId, desiredTestResult := range testCases {
-		result := IdToHash(testId)
+	for testID, desiredTestResult := range testCases {
+		result := IDToHash(testID)
 		if result != desiredTestResult {
-			t.Errorf("id to shortened string failed for value: %v; got: %v", testId, result)
+			t.Errorf("id to shortened string failed for value: %v; got: %v", testID, result)
 		}
 	}
 }
@@ -28,10 +28,10 @@ func TestDigitsForInt(t *testing.T) {
 		62:  []int{0, 1},
 	}
 
-	for testId, desiredTestResult := range testCases {
-		computedResult := FindDigitsForInt(testId)
+	for testID, desiredTestResult := range testCases {
+		computedResult := FindDigitsForInt(testID)
 		if !slicesAreEqual(computedResult, desiredTestResult) {
-			t.Errorf("Converting id to base 62 failed for value: %v; got: %v", testId, computedResult)
+			t.Errorf("Converting id to base 62 failed for value: %v; got: %v", testID, computedResult)
 		}
 	}
 }

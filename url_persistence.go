@@ -1,8 +1,8 @@
 package main
 
-// ShortUrlStorage ... Interface to allow storage of small URLs and
+// ShortURLStorage ... Interface to allow storage of small URLs and
 // facilitate mocks for testing.
-type ShortUrlStorage interface {
-	AddNewUrl(string) string
-	GetUrlByShortHash(string) string
+type ShortURLStorage interface {
+	AddNewURL(string) string
+	GetURLByShortHash(string) string
 }
