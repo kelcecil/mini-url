@@ -35,6 +35,7 @@ func FindDigitsForInt(dividend int) []int {
 			dividend = dividend / 62
 			digits = append(digits, remainder)
 		}
+	// This allows us to use the first letter a as a key.
 	case dividend == 0:
 		digits = append(digits, 0)
 	}
