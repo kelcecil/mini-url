@@ -19,13 +19,13 @@ type ShortUrlForwardingHandler struct {
 // NewUrlSubmission .. This struct contains attributes from a PUT to add a new
 // URL.
 type NewUrlSubmission struct {
-	URL string `json:url`
+	URL string `json:"url"`
 }
 
 // ShortenedUrl .. This struct contains attributes from a response following
 // a PUT to add a new URL.
 type ShortenedUrl struct {
-	Key string `json:key`
+	Key string `json:"key"`
 }
 
 // ServeHTTP .. This handler either adds a new url if the request is a PUT
