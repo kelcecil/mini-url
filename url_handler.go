@@ -35,41 +35,52 @@ type ShortenedUrl struct {
 func (handler ShortUrlForwardingHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	if r.Method == http.MethodPut {
-
-		// Read the body of the request and parse the new URL to be added.
-		data, err := ioutil.ReadAll(r.Body)
-		if err = checkAndHandleError(err, w, r); err != nil {
-			return
-		}
-		var newUrl NewUrlSubmission
-		if err := json.Unmarshal(data, &newUrl); err != nil {
-			log.Printf("Failed to unmarshal json: %v", err.Error())
-		}
-
-		key := handler.Storage.AddNewUrl(newUrl.URL)
-
-		// Prepare a JSON response to let the other end know the new key for the URL.
-		response := ShortenedUrl{Key: key}
-		jsonResponse, err := json.Marshal(response)
-		if checkAndHandleError(err, w, r) != nil {
-			return
-		}
-
-		// Write response.
-		w.WriteHeader(http.StatusOK)
-		w.Write(jsonResponse)
-		log.Printf("Added new short URL: %v as key: %v", newUrl.URL, key)
-
+		handler.handleAddingNewShortUrl(w, r)
 	} else {
-		// Fetch the hash from the URL
-		urlPath := strings.Split(r.URL.Path[1:len(r.URL.Path)], "/")
-		key := urlPath[0]
-		log.Printf("Fetching URL for key: %v", key)
-
-		// Look up the URL and redirect to the stored URL
-		newUrl := handler.Storage.GetUrlByShortHash(key)
-		http.Redirect(w, r, newUrl, http.StatusTemporaryRedirect)
+		handler.handleGettingShortUrl(w, r)
 	}
+}
+
+// handleAddingNewShortUrl .. This method adds a new URL to our storage and
+// returns a key for use in a short-url. This method is intended to be called
+// as the result of a PUT operation.
+func (handler ShortUrlForwardingHandler) handleAddingNewShortUrl(w http.ResponseWriter, r *http.Request) {
+	// Read the body of the request and parse the new URL to be added.
+	data, err := ioutil.ReadAll(r.Body)
+	if err = checkAndHandleError(err, w, r); err != nil {
+		return
+	}
+	var newUrl NewUrlSubmission
+	if err := json.Unmarshal(data, &newUrl); err != nil {
+		log.Printf("Failed to unmarshal json: %v", err.Error())
+	}
+
+	key := handler.Storage.AddNewUrl(newUrl.URL)
+
+	// Prepare a JSON response to let the other end know the new key for the URL.
+	response := ShortenedUrl{Key: key}
+	jsonResponse, err := json.Marshal(response)
+	if checkAndHandleError(err, w, r) != nil {
+		return
+	}
+
+	// Write response.
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+	log.Printf("Added new short URL: %v as key: %v", newUrl.URL, key)
+}
+
+// handleGettingShortUrl .. Thos method parses the key from the URL, finds the URL
+// for the redirect, and sends a redirect to the URL back to the user.
+func (handler ShortUrlForwardingHandler) handleGettingShortUrl(w http.ResponseWriter, r *http.Request) {
+	// Fetch the hash from the URL
+	urlPath := strings.Split(r.URL.Path[1:len(r.URL.Path)], "/")
+	key := urlPath[0]
+	log.Printf("Fetching URL for key: %v", key)
+
+	// Look up the URL and redirect to the stored URL
+	newUrl := handler.Storage.GetUrlByShortHash(key)
+	http.Redirect(w, r, newUrl, http.StatusTemporaryRedirect)
 }
 
 // checkAndHandleError ... This function serves to DRY up a common sequence
