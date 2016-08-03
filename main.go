@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+// main .. This just initializes the storage, hands it off to the main http
+// handler, and starts the server.
 func main() {
 	log.Print("Initializing storage")
 	storage := InitMapStorage()
