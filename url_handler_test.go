@@ -12,6 +12,8 @@ import (
 	"testing"
 )
 
+// TestAddNewUrlViaHandler .. This test is intended to verify that we can make
+// a PUT call to the root of the server and add a new short URL for use.
 func TestAddNewUrlViaHandler(t *testing.T) {
 	handler := ShortUrlForwardingHandler{
 		Storage: InitMapStorage(),
@@ -46,6 +48,8 @@ func TestAddNewUrlViaHandler(t *testing.T) {
 	}
 }
 
+// TestRedirectToStoredUrl .. These tests are intended to ensure that we receive
+// redirects for URLs that have been added to storage previously.
 func TestRedirectToStoredUrl(t *testing.T) {
 	redirectError := errors.New("Redirect occurred")
 	storage := MapUrlStorage{
@@ -67,6 +71,8 @@ func TestRedirectToStoredUrl(t *testing.T) {
 	}
 }
 
+// tryGetURL .. Convenience function to test if a HTTP redirect goes where we
+// expect it to go. If it does not, then we fail the test.
 func tryGetURL(t *testing.T, storage MapUrlStorage, client *http.Client, key, redirectUrl, desiredUrl string) {
 	targetUrl := fmt.Sprintf("%v/%v", redirectUrl, key)
 	req, err := http.NewRequest(http.MethodGet, targetUrl, nil)
@@ -83,6 +89,8 @@ func tryGetURL(t *testing.T, storage MapUrlStorage, client *http.Client, key, re
 	}
 }
 
+// initializeTestServer .. Convenience function to create the test server for
+// the event in which an overriden redirect policy is not required.
 func initializeTestServer(storage ShortUrlStorage) *httptest.Server {
 	handler := ShortUrlForwardingHandler{
 		Storage: storage,
@@ -90,6 +98,9 @@ func initializeTestServer(storage ShortUrlStorage) *httptest.Server {
 	return httptest.NewServer(handler)
 }
 
+// checkForError .. Helpful function to reduce the error checking code in the
+// handler check code. Pass the testing pointer, a message, and an error to
+// check for failure.
 func checkForError(t *testing.T, message string, err error) {
 	if err != nil {
 		t.Errorf("%v. Reason: %v", message, err.Error())
